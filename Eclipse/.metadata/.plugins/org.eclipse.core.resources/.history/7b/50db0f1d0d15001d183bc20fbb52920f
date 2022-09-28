@@ -1,0 +1,72 @@
+package holder;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class GUI implements ActionListener {
+	
+	
+	private JPanel panel;
+	private JFrame frame;
+	private JButton b1,b2,b3,b4,b5,b6,b7,b8,b9,b10;
+	private JLabel label; 
+	private int count = 0; 
+	
+	
+	public GUI() {
+		frame = new JFrame();
+		panel = new JPanel(); 
+		
+		label = new JLabel(); 
+		ArrayList<JButton> temp = new ArrayList<JButton>(); 
+		temp.add(b1);
+		temp.add(b2);
+		temp.add(b3);
+		temp.add(b4);
+		temp.add(b5);
+		temp.add(b6);
+		temp.add(b7);
+		temp.add(b8);
+		temp.add(b9);
+		temp.add(b10);
+		for(JButton but : temp) {
+			but = new JButton("Click Me");
+			but.addActionListener(this);
+			panel.add(but);
+		}
+		
+		panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+		panel.setLayout(new GridLayout(5, 5));
+		frame.add(panel, BorderLayout.CENTER);
+		
+		panel.add(label);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Our GUI");
+		frame.pack();
+		frame.setVisible(true);
+		
+		
+	}
+
+	public static void main(String[] args) {
+		GUI goop = new GUI(); 
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		count++;
+		label.setText("Number of Clicks: " + count);
+		
+	}
+
+}

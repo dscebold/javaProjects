@@ -1,0 +1,86 @@
+package letsDoThis;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class GameLogic {
+
+	// Attributes
+
+	Character person;
+	Random rand;
+	Scanner scan;
+	ArrayList<Enemy> ants;
+	Room foyer, hall, corner, trap, lead, ante, boss;
+	ArrayList<Room> rooms;
+	String[] items = { "axe", "armor", "medallion", "cloak", "crossbow", "boots" };
+	private int curRoom;
+
+	// Constructor
+
+	public GameLogic() {
+		curRoom = 0;
+		person = new Character();
+		rand = new Random();
+		scan = new Scanner(System.in);
+		ants = new ArrayList<>();
+		foyer = new Room(true, false, false, false);
+		hall = new Room(true, true, false, false);
+		corner = new Room(false, true, true, false);
+		trap = new Room(false, false, true, true);
+		lead = new Room(true, false, false, true);
+		ante = new Room(true, true, false, false);
+		boss = new Room(false, true, false, false);
+		rooms = new ArrayList<>();
+		build();
+	}
+
+	// Methods
+
+	private void build() {
+		rooms.add(foyer);
+		rooms.add(hall);
+		rooms.add(corner);
+		rooms.add(trap);
+		rooms.add(lead);
+		rooms.add(ante);
+		rooms.add(boss);
+	}
+
+	public void run() {
+		foyer.setEntered(false);
+		System.out.println("You enter the first room ready to fight.");
+		Enemy joe = new Enemy();
+		System.out.println("You see a " + joe.getType() + " in front of you\nType: " + joe.getType() + "\nHealth: "
+				+ joe.getHealth());
+		System.out.println("What would you like to do?\nAttack\nGive Up");
+		String first = scan.nextLine().toLowerCase();
+		if (first.equals("attack")) {
+
+		} else if (first.equals("give up")) {
+			person.setAlive(false);
+			System.out.println("You gave up and died. Game Over.");
+		} else {
+			System.out.println("That is not an option\nWhat would you like to do?\nAttack\nGive Up");
+		}
+
+	}
+	
+	
+	
+}
+//
+//int numEn = rand.nextInt(5);for(
+//	int k = 0;k<numEn;k++)
+//	{
+//		Enemy bob = new Enemy();
+//		if (bob.getType().equals("nonNewtonian")) {
+//			k = numEn;
+//		}
+//		ants.add(bob);
+//	}System.out.println("You see "+ants.size()+" enemies in front of you");for(
+//	int i = 0;i<ants.size();i++)
+//	{
+//	System.out.println((i+1) + "Type: " + ants.get(i).getType() + "\n" + "Health: " + ants.get(i).getHealth());
+//}

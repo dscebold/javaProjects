@@ -1,0 +1,62 @@
+package WHYYY;
+
+public class recursiveArt {
+	
+	
+	public static String box(String output, int size) {
+		String hold = "";
+		for(int i = 0; i < size; i++) {
+			for(int q = 0; q < size; q++) {
+				hold += output;
+			}
+			hold += "\n"; 
+		}
+		return hold; 
+	}
+	
+	public static void printLine(String thing, int length) {
+		if(length > 0) {
+			System.out.print(thing + " ");
+			printLine(thing, -- length); 
+		}
+	}
+	
+	public static void printRows(String thing, int rows, int end) {
+		if(end > 0) {
+			printLine(thing, rows); 
+			System.out.println();
+			printRows(thing, rows, --end); 
+		}
+	}
+	
+	public static void diamondSpaces(int width) {
+		if(width > 0) {
+			System.out.print(" ");
+			diamondSpaces(--width); 
+		}
+	}
+	
+	public static void diamondRows() {
+		
+	}
+	public static void diamondTop() {
+		
+	}
+	public static void diamondBottom() {
+		
+	}
+	public static void diamondMiddle() {
+		
+	}
+	public static void printDiamond(String thing, int width, int start, int end) {
+		if(start < width) {
+			diamondSpaces(width);
+			diamondRows(); 
+		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(box("+", 10)); 
+	}
+
+}

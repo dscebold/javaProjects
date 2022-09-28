@@ -1,0 +1,81 @@
+package letsDoThis;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Character {
+	
+	
+	//Attributes
+	private String type; 
+	private int totHealth, hit, health;
+	private boolean alive, wiz, barb, arch; 
+	private Random rand;
+	private Scanner scan; 
+	private String[] classes = {"1. Wizard", "2. Archer", "3. Barbarian"};
+	private ArrayList<String> inventory
+	
+	
+	public Character() { //Constructor
+		type = setType(); 
+		alive = true; 
+		rand = new Random();
+		scan = new Scanner(System.in); 
+		totHealth = 0; 
+		hit = 0; 
+		wiz = false;
+		barb = false;
+		arch = false; 
+	}
+
+
+	private String setType() {
+		System.out.println("The room is dimly lit, with a dank scent seeping through the damp stones.\nA table stands in front of you, brandshing three objects.\nOn the left, a long oak staff sits, the branches encapsulating a dragon on the far end.\nIn the middle, A flexible willow weaved bow lays underneath a full leather quiver.\nTo the right, a thiccc hunk of sharpened metal sits within a sheath.\nChoose your Class\n" + classes);
+		String decide = scan.nextLine().toLowerCase(); 
+		if(decide.contains("wizard") || decide.contains("1")) {
+			makeWizard();
+		}
+		if(decide.contains("archer") || decide.contains("2")) {
+			makeArcher();
+		}
+		if(decide.contains("barbarian") || decide.contains("3")) {
+			makeBarbarian(); 
+		}
+		return type; 
+	}
+
+
+	private void makeBarbarian() {
+		System.out.println("You chose Barbarian");
+		this.totHealth = 80;
+		this.hit = 7;
+		this.barb = true; 
+		this.health = this.totHealth;
+	}
+
+
+	private void makeArcher() {
+		System.out.println("You chose Archer");
+		this.totHealth = 60;
+		this.hit = 8;
+		this.arch = true;
+		this.health = this.totHealth;
+	}
+
+
+	private void makeWizard() {
+		System.out.println("You chose Wizard");
+		this.totHealth = 40;
+		this.hit = 8;
+		this.wiz = true; 
+		this.health = this.totHealth;
+	}
+	
+	public boolean checkAlive() {
+		if(this.totHealth <= 0) {
+			this.alive = false; 
+		}
+		return this.alive; 
+	}
+
+}

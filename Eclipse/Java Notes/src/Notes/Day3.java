@@ -1,0 +1,54 @@
+package Notes;
+
+import java.util.Scanner;
+
+
+public class Day3 {
+
+	public static void main(String[] args) {
+		
+		System.out.println();
+		Scanner scan = new Scanner(System.in);
+		
+		String word = "the bird";
+		
+		word = scan.nextLine();
+		
+		word.charAt(0); // this finds the first character in a string
+		
+		
+		/*
+		 *  0 | 1 | 2 | 3
+		 *  ___________
+		 *  w | o | r | d
+		 */
+		
+		//find the length of a string
+		System.out.println(word.length());
+		System.out.println(word.charAt(word.length()-1)); // this prints the last letter in the string word
+		
+		System.out.println(word.substring(1));
+			// String.substring(num) returns everything from num to end of a string
+		
+		
+		System.out.println(word.substring(1, 3)); //the second parameter is non- inclusive
+		
+		String theFirst = (word.charAt(0) + "").toUpperCase();		
+						//grabbed the first character, cast it to a string, changed it to uppercase
+		System.out.println(theFirst + word.substring(1));
+		
+		
+		System.out.println(word.indexOf("A"));
+								//String.indexOf returns the first ime the item appeats in the string]]
+								//or -1 if the item is not in the string
+
+		if( word.contains("thing")) {
+			System.out.println("Thing is in word");
+		}
+		
+		
+		scan.close();
+		
+	}
+
+}

@@ -1,0 +1,281 @@
+import java.util.ArrayList;
+
+public class DrewBookAnalytics extends BookAnalytics {
+
+	private String master, noPunct;
+
+	public DrewBookAnalytics(String aTextFile, String outputFile) {
+		super(aTextFile, outputFile);
+		master = convert();
+		noPunct = reomvePunc();
+	}
+
+	private String reomvePunc() {
+		String message = master;
+		message = message.toLowerCase();
+		String[] punc = { ".", ",", "?", "!", "\"", "’", "\\", "/" };
+		for (String per : punc) {
+			message = message.replace(per, "");
+		}
+		return message;
+	}
+
+	private String convert() {
+		String allText = "";
+		while (scan.hasNextLine()) {
+			String temp = scan.nextLine();
+			allText += temp + "\n";
+		}
+		return allText;
+	}
+
+	@Override
+	public String mostFrequentWord() {
+		String message = master;
+		message = message.toLowerCase();
+		String[] punc = { ".", ",", "?", "!", "\"", "’", "\\", "/" };
+		for (String per : punc) {
+			message = message.replace(per, "");
+		}
+
+		String[] most = message.split(" ");
+		String max = "";
+		int count = 0;
+		int maxCount = 0;
+		for (String word : most) {
+			count = 0;
+			for (String check : most) {
+				if (check.equals(word)) {
+					count++;
+				}
+			}
+			if (count > maxCount) {
+				maxCount = count;
+				max = word;
+			}
+		}
+		String dad = "";
+		for (String pat : punc) {
+			dad += "" + pat;
+		}
+
+		return max;
+	}
+
+	@Override
+	public String mostFrequentWordWithCapitalFirstLetter() {
+
+		return null;
+	}
+
+	@Override
+	public char mostFrequentLetter() {
+		String message = master;
+		int count = 0;
+		int maxCount = 0;
+		String letter = "";
+		String maxLetter = "";
+		message = message.replace(" ", "");
+
+		for (int i = 0; i < message.length(); i++) {
+			letter = "" + message.charAt(i);
+			letter.toLowerCase();
+			count = 0;
+			for (int k = 0; k < message.length(); k++) {
+				String check = "" + message.charAt(k);
+				if (check.equalsIgnoreCase(letter)) {
+					count++;
+					if (count > maxCount) {
+						maxCount = count;
+						maxLetter = letter;
+					}
+				}
+			}
+
+		}
+		char bee = maxLetter.charAt(0);
+
+		return 0;
+	}
+
+	@Override
+	public int wordCount() {
+		String message = master;
+		message = message.toLowerCase();
+		String[] punc = { ".", ",", "?", "!", "\"", "’", "\\", "/" };
+		for (String per : punc) {
+			message = message.replace(per, "");
+		}
+
+		String[] most = message.split(" ");
+
+		return most.length;
+	}
+
+	@Override
+	public int characterCount() {
+		String message = master;
+		message = message.toLowerCase();
+		String[] punc = { ".", ",", "?", "!", "\"", "’", "\\", "/" };
+		for (String per : punc) {
+			message = message.replace(per, "");
+		}
+		message.replace("\n", "");
+		return message.length();
+	}
+
+	@Override
+	public int vowelCount() {
+		String message = master;
+		message = message.toLowerCase();
+		String[] punc = { ".", ",", "?", "!", "\"", "’", "\\", "/" };
+		for (String per : punc) {
+			message = message.replace(per, "");
+		}
+		int count = 0;
+		char[] vowel = { 'a', 'e', 'i', 'o', 'u', 'y' };
+		for (int i = 0; i < message.length(); i++) {
+			for (char blue : vowel) {
+				if (message.charAt(i) == blue) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public int consonantCount() {
+		String message = master;
+		message = message.toLowerCase();
+		String[] punc = { ".", ",", "?", "!", "\"", "’", "\\", "/" };
+		for (String per : punc) {
+			message = message.replace(per, "");
+		}
+		int count = 0;
+		char[] vowel = { 'a', 'e', 'i', 'o', 'u', 'y', ' '};
+		for (int i = 0; i < message.length(); i++) {
+			for (char blue : vowel) {
+				if (!(message.charAt(i) == blue)) {
+					count++;
+				}
+			}
+		}
+		return count;
+
+	}
+
+	@Override
+	public double averageWordLength() {
+		String message = master; 
+		message = message.toLowerCase(); 
+		  String[] punc = {".", ",", "?", "!", "\"", "’", "\\", "/"};
+		  for(String per : punc){
+		    message = message.replace(per, "");
+		  }
+		  double count = 0.0; 
+		  
+		  String[] most = message.split(" ");
+		  for(String aver : most) {
+		    count += aver.length(); 
+		  }
+		  
+		  return count/most.length; 
+	}
+
+	@Override
+	public int sentenceCount() {
+		
+		return 0;
+	}
+
+	@Override
+	public double averageWordsPerSentance() {
+
+		return 0;
+	}
+
+	@Override
+	public int numberOfDifferentWords() {
+		String message = master; 
+		message = message.toLowerCase(); 
+		  String[] punc = {".", ",", "?", "!", "\"", "’", "\\", "/"};
+		  for(String per : punc){
+		    message = message.replace(per, "");
+		  }
+		 
+		  String[] most = message.split(" "); 
+		  ArrayList<String> checked = new ArrayList<>();
+		  int count = 0; 
+		  for(String word : most){
+		    if(!(checked.contains(word))){
+		      count++;
+		      checked.add(word); 
+		    }
+		    
+		  }
+		  
+		  
+		  
+		  return count;
+	}
+
+	@Override
+	public String alphabetizeAllByChar() {
+
+		return null;
+	}
+
+	@Override
+	public String alphabetizeAllByWord() {
+
+		return null;
+	}
+
+	@Override
+	public String replaceWordAndPreserveCase(String aLine, String wordOne, String wordTwo) {
+
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		String allText = "";
+		while (scan.hasNextLine()) {
+			String temp = scan.nextLine();
+			allText += temp + "\n";
+		}
+		return allText; 
+	}
+
+	@Override
+	public void replaceWordsAndWriteToFile(String[] wordsToBeReplaced, String[] wordsToReplaceWith) {
+
+	}
+
+	public void printFile() {
+		String allText = "";
+		while (scan.hasNextLine()) {
+			String temp = scan.nextLine();
+			allText += temp + "\n";
+			System.out.println(nukeLetterA(temp));
+		}
+		System.out.println(allText);
+		write.write(allText); // use a textWriter to output a string to a new file\
+		write.flush(); // clears the writer for the next use
+	}
+
+	private String nukeLetterA(String nextLine) {
+//		String anOutput = "";
+//		for (int i = 0; i < nextLine.length(); i++) {
+//			if (nextLine.charAt(i) == 'a') {
+//				anOutput += "*";
+//			} else {
+//				anOutput += nextLine.charAt(i);
+//			}
+//		}
+//		return anOutput;
+		return nextLine.replace("a", "*");
+	}
+
+}

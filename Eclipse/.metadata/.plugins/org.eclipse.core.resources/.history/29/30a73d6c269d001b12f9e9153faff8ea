@@ -1,0 +1,19 @@
+package Notes;
+
+public class enhancedForLoopsRunner {
+
+	public static void main(String[] args) {
+		//Enhanced For Loops are made for going through collection
+			//You cannot change the size of the collection in an enhanced for loop
+			//for(Object variable: collection) {}
+		String[] names = {"Guy", "hue", "Peter", "Sue", "Jane", "Cindy"};
+		
+		for(String name : names) {
+			System.out.println("Hello " + name + "!");
+		}
+		
+		for(int i = 0 ; i < names.length; i++) {
+			System.out.println("Hello " + names[i] + "!");
+		}
+	}
+}

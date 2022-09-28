@@ -1,0 +1,13 @@
+
+public class ChromaRunner {
+
+	public static void main(String[] args) {
+		ChromaKey floop = new ChromaKey();
+		// floop.green1test();
+		// floop.green2test();
+		// floop.green3test();
+		//floop.easyStego();
+		System.out.println(floop.decodeHard());
+	}
+
+}

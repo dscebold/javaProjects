@@ -1,0 +1,48 @@
+package Info1;
+
+public class Car {
+	
+	
+	
+	//Attributes
+	private String make;
+	private String model;
+	private String color;
+	private int year; 
+	
+	
+	//Constructor
+	public Car(String make, String model, String color, int year) {
+		this.make = make;
+		this.model = model;
+		this.color = color;
+		this.year = year; 
+	}
+	
+	
+	//Methods
+	private void yes() {
+		System.out.println("yes");
+	}
+	
+	public void honk() {
+		System.out.println("Honk!");
+	}
+	
+	public void drive() {
+		System.out.println("The car drove.");
+	}
+	
+	
+	public String toString() {
+		return "This Car is a " + color + " " + year + " " + make + " " + model + "!"; 
+	}
+	
+	public static void main(String[] args) {
+		Car ford = new Car("Ford", "F-150", "Red", 2020); 
+		
+		ford.yes();
+		System.out.println(ford.toString());
+	}
+
+}

@@ -1,0 +1,115 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ChromaKey {
+	private Scanner scan;
+	private File file;
+	private PrintWriter write;
+	private String read, allText;
+	private int[] words;
+
+	public ChromaKey() {
+		file = new File("rick.txt");
+		try {
+			scan = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		allText = "";
+		while (scan.hasNextLine()) {
+			String temp = scan.nextLine();
+			allText += temp + "\n";
+		}
+		words = new int[allText.length()];
+	}
+
+	public void green1test() {
+		Picture pic = new Picture("dDay1.jpg");
+		Picture grev = new Picture("nolightsaberGrevious1.jpg");
+		// pic.explore();
+		// grev.explore();
+		pic.getGreen(grev);
+		pic.Grayscale();
+		pic.explore();
+	}
+
+	public void green2test() {
+		Picture pic2 = new Picture("endgame.jpg");
+		Picture grev = new Picture("lightsaberGrevious1.jpg");
+		pic2 = pic2.scale(3.5, 3.5);
+//		pic2.explore();
+//		grev.explore();
+		grev = grev.scale(3, 3);
+		grev.setPink();
+//		grev.reColor(); 
+//		grev.explore();
+//		grev.lightUp();
+//		grev.explore();
+		pic2.getGreen1(grev);
+//		pic.explore();
+//		pic.Grayscale();
+		pic2.lightsaber();
+		pic2.explore();
+	}
+
+	public void green3test() {
+		Picture pic = new Picture("sfSkyline.jpg");
+		Picture death = new Picture("deathStar.jpg");
+		pic = pic.scale(1.1603011583, 1.1603011583);
+		// pic.explore();
+		pic.getStar(death);
+		pic.explore();
+	}
+
+	public String decodeEasy() {
+		String last = "";
+		Picture pic = easyStego();
+		ArrayList<String> rewrite = pic.getNums();
+		for (String text : rewrite) {
+			last += text;
+		}
+		return last;
+	}
+
+	public Picture easyStego() {
+		String temp = "";
+		int hold = 0;
+		Picture pic = new Picture("rickRoll.jpg");
+		pic = pic.scale(5, 5);
+		for (int i = 0; i < allText.length(); i++) {
+			temp = Integer.toBinaryString((int) allText.charAt(i));
+			while (temp.length() < 8) {
+				temp = "0" + temp;
+			}
+			hold = (int) (Integer.parseInt(temp, 2));
+			words[i] = hold;
+		}
+		pic.hideEasyStego(words);
+		return pic;
+	}
+
+	public void hardStego() {
+		String hold = "";
+		int hold = 0; 
+		ArrayList<char> bins = new ArrayList<>();
+		for(char let : allText) {
+			hold = (int)(let); 
+			
+		}
+		for (int i = 0; i < bin.length(); i++) {
+			if (bin.charAt(i) != bins[i]) {
+				if (bins[i] == '0') {
+					returns[i]++;
+				} else if (bins[i] == '1') {
+					returns[i]--;
+				}
+			}
+		}
+		return returns;
+	}
+
+}

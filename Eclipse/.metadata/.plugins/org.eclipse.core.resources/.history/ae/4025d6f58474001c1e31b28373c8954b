@@ -1,0 +1,60 @@
+package letsDoThis;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Enemy {
+
+	// Attributes
+
+	private int health, hit, damage, armor;
+	private Random rand;
+	private boolean alive;
+	private String type;
+
+	// Constructor
+
+	public Enemy() {
+		rand = new Random();
+		setType();
+	}
+
+	// Methods
+
+	private void setType() {
+
+		int bee = rand.nextInt(10000);
+
+		if (bee == 9999) {
+			type = "die";
+			setStats(1000000,1000000,1000000,1); 
+
+		}
+		else if (bee >= 7500 || bee < 9999) {
+			type = "trenchcoat";
+			setStats()
+
+		} else if (bee >= 5000 || bee <= 7499) {
+			type = "zombie";
+
+		} else if (bee >= 2500 || bee <= 4999) {
+			type = "nonNewtonian";
+
+		} else if (bee >= 0 || bee <= 2499) {
+			type = "skeleton";
+
+		}
+		
+		
+		
+	}
+	
+	
+	private void setStats(int heart, int punch, int ouch, int safe) {
+		this.health = heart;
+		this.hit = punch; 
+		this.damage = ouch;
+		this.armor = safe;
+	}
+
+}

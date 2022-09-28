@@ -1,0 +1,14 @@
+import java.util.ArrayList;
+
+public class wordWriter {
+	
+	private String word; 
+	private ArrayList<String> total; 
+	
+	public wordWriter() {
+		word = ""; 
+		total = new ArrayList<>(); 
+	}
+	
+
+}

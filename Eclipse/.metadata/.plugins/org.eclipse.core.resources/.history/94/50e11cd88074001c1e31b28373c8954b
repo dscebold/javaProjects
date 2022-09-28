@@ -1,0 +1,27 @@
+package letsDoThis;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Enemy {
+	
+	//Attributes
+	
+	private int health, hit; 
+	private Random rand;
+	private Scanner scan;
+	private boolean alive; 
+	private String type; 
+	
+	
+	//Constructor
+	
+	
+	public Enemy() {
+		
+	}
+	
+	
+	//Methods
+
+}

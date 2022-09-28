@@ -1,0 +1,49 @@
+package letsDoThis;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Enemy {
+
+	// Attributes
+
+	private int health, hit;
+	private Random rand;
+	private boolean alive;
+	private String type;
+
+	// Constructor
+
+	public Enemy() {
+		rand = new Random();
+		setType();
+	}
+
+	// Methods
+
+	private void setType() {
+		
+		int bee = rand.nextInt(10000);
+		
+		if (rand.nextInt(4) == 1) {
+			type = "skeleton";
+
+		} else if (rand.nextInt(5) == 1) {
+			type = "trenchcoat"; 
+
+		} else if (rand.nextInt() == 1) {
+
+		} else if (rand.nextInt(20) == 1) {
+			type = "nonNewtonian";
+
+		} else if (rand.nextInt(10000) == 1) {
+			type = "die";
+
+		}
+
+		else {
+			type = "zombie";
+		}
+	}
+
+}

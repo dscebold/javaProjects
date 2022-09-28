@@ -1,0 +1,682 @@
+package confour;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Scanner;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Logic implements ActionListener {
+
+	// Attributes
+	private JPanel panel;
+	private JFrame frame;
+	private ButtonIndex[][] buttons; 
+	private Scanner scan;
+	private Random rand;
+	private piece[][] board;
+	private int[] top;
+	private int[][] energy;
+	private boolean turn, noWin, offensive, deffensive, difficulty, played, buttonPressed;
+	private String line;
+	private HashMap<Integer, Integer> worthless;
+	private int winCon1, winCon2;
+	private int row, col; 
+	
+	
+	// Constructor
+	public Logic() {
+		scan = new Scanner(System.in);
+		// GUI Stuff
+		frame = new JFrame();
+		panel = new JPanel(); 	
+		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
+		frame.add(panel, BorderLayout.CENTER);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Connect Four");
+		frame.pack();
+		frame.setVisible(true);
+		makeBoard();
+		line = "---+";
+		turn = true;
+		noWin = true;
+		setCon();
+		offensive = false;
+		deffensive = false;
+		rand = new Random();
+		difficulty = true;
+		buttonPressed = false; 
+		
+		
+		
+	}
+
+	private void setCon() {
+		if (board[0].length == 4) {
+			winCon1 = 3;
+			winCon2 = 6;
+		} else if (board[0].length <= 7) {
+			winCon1 = 4;
+			winCon2 = 8;
+		} else {
+			winCon1 = 5;
+			winCon2 = 10;
+		}
+
+	}
+
+	// Methods
+
+	private boolean isValid(int grav, int up, int right) {
+		if (grav == -1 && up - 1 >= 0) {
+			return true;
+		} else if (grav == 2 && right - 1 >= 0) {
+			return true;
+		} else if (grav == 3 && right + 1 < board[up].length) {
+			return true;
+		} else if (grav == 1 && up + 1 < board.length) {
+			return true;
+		}
+		return false;
+	}
+
+	
+
+	public void printGrid() {
+		for (int i = 0; i < top.length; i++) {
+			if (i == 0) {
+				System.out.print("  " + top[i]);
+			} else if (i < 9) {
+				System.out.print("   " + top[i]);
+			} else {
+				System.out.print("  " + top[i]);
+			}
+		}
+		System.out.println();
+		for (int i = 0; i < board.length; i++) {
+			System.out.print("|");
+			for (int q = 0; q < board[i].length; q++) {
+				System.out.print(board[i][q].getType());
+			}
+			System.out.println();
+			System.out.print("+");
+			for (int q = 0; q < board[i].length; q++) {
+				System.out.print(line);
+			}
+			System.out.println();
+		}
+	}
+
+	private void makeBoard() {
+		int length = 0;
+		int width = 0;
+		while (true) {
+			while (true) {
+				System.out.println("How THICCC would you like the board to be?");
+				try {
+					length = Integer.parseInt(scan.nextLine());
+					break;
+				} catch (Exception e) {
+					System.out.println("THAT IS NOT A NUMBER!!!!!!");
+				}
+			}
+			if ((length) <= 99 && length >= 4) {
+				break;
+			} else {
+				System.out.println("INVALID RESPONSE!!!");
+			}
+		}
+		while (true) {
+			while (true) {
+				System.out.println("By");
+				try {
+					width = Integer.parseInt(scan.nextLine());
+					break;
+				} catch (Exception e) {
+					System.out.println("THAT IS NOT A NUMBER!!!!!!");
+				}
+
+			}
+			if (width <= 99 && width >= 4) {
+				setGrid(length, width);
+				setGUI(length, width); 
+				break;
+			} else {
+				System.out.println("INVALID RESPONSE!!!");
+			}
+
+		}
+
+	}
+
+	private void setGUI(int rows, int cols) {
+		buttons = new ButtonIndex[rows][cols]; 
+		panel.setLayout(new GridLayout(rows, cols));
+		for(int i = 0; i < buttons.length; i++) {
+			for(int j = 0; j < buttons[i].length; j++) {
+				buttons[i][j] = new ButtonIndex(i,j); 
+				buttons[i][j].getButton().setBackground(Color.WHITE);
+				buttons[i][j].getButton().setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+				buttons[i][j].getButton().addActionListener(this);
+				buttons[i][j].getButton().setSize(80, 80);
+				panel.add(buttons[i][j].getButton());
+			}
+		}
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton myButton = (JButton) e.getSource();
+	    ButtonIndex theRightPair = buttons[0][0];
+	    for (int row = 0; row < buttons.length; row++) {
+	        for (int col = 0; col < buttons[row].length; col++) {
+	            if(buttons[row][col].getButton().equals(myButton)){
+	                theRightPair = buttons[row][col];
+	                break;
+	            }
+	        }
+	    }
+	     
+	    if(theRightPair.getButton().getBackground().equals(Color.WHITE)) {
+	    	row = theRightPair.getRow();
+		    col = theRightPair.getColumn();
+		    buttonPressed = true; 
+	    }
+
+		
+	}
+	
+	private void setGrid(int rows, int cols) {
+		board = new piece[rows][cols];
+		energy = new int[rows][cols];
+		top = new int[cols];
+		for (int i = 0; i < board.length; i++) {
+			for (int q = 0; q < board[i].length; q++) {
+				board[i][q] = new piece();
+			}
+		}
+		for (int i = 0; i < board[0].length; i++) {
+			top[i] = (i + 1);
+		}
+	}
+
+	public void chooseGame() {
+		System.out.println("How many players:\n1.\n2.");
+		int plays = 0;
+		while (true) {
+			try {
+				plays = Integer.parseInt(scan.nextLine());
+				break;
+			} catch (Exception e) {
+				System.out.println("THAT IS NOT A NUMBER!!!!!!");
+			}
+		}
+		if (plays == 2) {
+			runGame();
+		} else if (plays == 1) {
+			oneGame();
+		} else {
+			System.out.println("INVALID RESPONSE!!!");
+			chooseGame();
+		}
+	}
+
+	private void oneGame() {
+		int plays = 0;
+		while (difficulty) {
+			System.out.println("1.Easy\n2.Hard");
+			try {
+				plays = Integer.parseInt(scan.nextLine());
+				difficulty = false;
+				break;
+			} catch (Exception e) {
+				System.out.println("THAT IS NOT A NUMBER!!!!!!");
+			}
+		}
+		if (plays == 1) {
+			offensive = true;
+		}
+		if (plays == 2) {
+			deffensive = true;
+		}
+		while(!buttonPressed) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		buttonPressed = false; 
+		int up = row; 
+		int right = col; 
+		while (isValid(1, up, right) && (board[up + 1][right].getType().equals("   |"))) {
+			buttons[up][right].getButton().setBackground(Color.RED);
+			up++;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			buttons[up][right].getButton().setBackground(Color.RED);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			buttons[up - 1][right].getButton().setBackground(Color.WHITE);
+		}
+		board[up][right].setValue(1);
+		board[up][right].setType(" X |");
+		board[up][right].setWin("X");
+		buttons[up][right].getButton().setBackground(Color.RED);
+		checkWin(1, up, right, winCon1);
+		turn = false;
+		//This is the old one person game
+		
+		
+		
+//		printGrid();
+//		int spot = 0;
+//		int right = 0;
+//		int up = 0;
+//		while (true) {
+//			System.out.println("Where would you like to go?");
+//			try {
+//				spot = Integer.parseInt(scan.nextLine());
+//				break;
+//			} catch (Exception e) {
+//				System.out.println("THAT IS NOT A NUMBER!!!!!!");
+//			}
+//		}
+//		if (spot <= board.length && spot >= 1 && board[0][spot - 1].getType().equals("   |")) {
+//			up = 0;
+//			right = (spot - 1);
+//			while (isValid(1, up, right) && (board[up + 1][right].getType().equals("   |"))) {
+//				up++;
+//			}
+//			board[up][right].setValue(1);
+//			board[up][right].setType(" X |");
+//			board[up][right].setWin("X");
+//			checkWin(1, up, right, winCon1);
+//			turn = false;
+//		} else {
+//			System.out.println("INVALID RESPONSE!!!");
+//		}
+		if (noWin && checkFull()) {
+			compGame();
+		}
+	}
+
+	private void compGame() {
+		for (int i = 0; i < energy.length; i++) {
+			for (int j = 0; j < energy[i].length; j++) {
+				energy[i][j] = 0;
+			}
+		}
+		checkEnergy();
+		int up = 0;
+		int right = 0;
+		int best = 0;
+		for (int i = 0; i < energy.length; i++) {
+			for (int j = 0; j < energy[i].length; j++) {
+				if (energy[i][j] >= best) {
+					best = energy[i][j];
+					right = j;
+				}
+			}
+		}
+		if (best == 0) {
+			right = rand.nextInt(board.length);
+		}
+		if (board[up][right].getType().equals("   |")) {
+			while (isValid(1, up, right) && (board[up + 1][right].getType().equals("   |"))) {
+				buttons[up][right].getButton().setBackground(Color.BLACK);
+				up++;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				buttons[up][right].getButton().setBackground(Color.BLACK);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				buttons[up - 1][right].getButton().setBackground(Color.WHITE);
+			}
+		}
+		board[up][right].setValue(2);
+		board[up][right].setType(" O |");
+		board[up][right].setWin("O");
+		buttons[up][right].getButton().setBackground(Color.BLACK);
+		checkWin(2, up, right, winCon2);
+		turn = true;
+		if (noWin && checkFull()) {
+			oneGame();
+		}
+	}
+
+	private void checkEnergy() {
+		for (int i = 0; i < board[0].length; i++) {
+			int up = 0;
+			int right = i;
+			while (isValid(1, up, right) && board[up + 1][right].getType().equals("   |")) {
+				up++;
+			}
+			checkHeat(up, right);
+		}
+	}
+
+	private void checkHeat(int up, int right) {
+		int hold1 = 0;
+		int hold2 = 0;
+		int top = 0;
+		hold1 += checkHotSpot(up, right, -1, -1, -1, 2);
+		hold2 += checkHotSpot(up, right, 1, 1, 1, 3);
+		if (hold1 + hold2 > top) {
+			top = (hold1 + hold2);
+		}
+		hold1 = 0;
+		hold2 = 0;
+		hold1 += checkHotSpot(up, right, -1, 1, -1, 3);
+		hold2 += checkHotSpot(up, right, 1, -1, 1, 2);
+		if (hold1 + hold2 > top) {
+			top = (hold1 + hold2);
+		}
+		hold1 = 0;
+		hold2 = 0;
+		hold1 += checkHotSpot(up, right, -1, 0, -1, -1);
+		hold2 += checkHotSpot(up, right, 1, 0, 1, 1);
+		if (hold1 + hold2 > top) {
+			top = (hold1 + hold2);
+		}
+		hold1 = 0;
+		hold2 = 0;
+		hold1 += checkHotSpot(up, right, 0, 1, 3, 3);
+		hold2 += checkHotSpot(up, right, 0, -1, 2, 2);
+		if (hold1 + hold2 > top) {
+			top = (hold1 + hold2);
+		}
+		if (top > energy[up][right]) {
+			energy[up][right] = top;
+		}
+	}
+
+	private int checkHotSpot(int up, int right, int upMod, int rightMod, int firstCheck, int secondCheck) {
+		int count = 0;
+		if (offensive) {
+			while (isValid(firstCheck, up, right) && isValid(secondCheck, up, right)) {
+				if (board[up + upMod][right + rightMod].getType() == " O |") {
+					count += board[up + upMod][right + rightMod].getValue();
+					up += upMod;
+					right += rightMod;
+				} else if (board[up + upMod][right + rightMod].getType() == " X |") {
+					count = 0;
+					break;
+				} else {
+					break;
+				}
+			}
+		} else if (deffensive) {
+			while (isValid(firstCheck, up, right) && isValid(secondCheck, up, right)) {
+				if (board[up + upMod][right + rightMod].getType() == " X |") {
+					count += board[up + upMod][right + rightMod].getValue();
+					up += upMod;
+					right += rightMod;
+				} else if (board[up + upMod][right + rightMod].getType() == " O |") {
+					count = 0;
+					break;
+				} else {
+					break;
+				}
+			}
+		}
+		return count;
+	}
+
+	public void runGame() {
+		printGrid();
+		int spot = 0;
+		int right = 0;
+		int up = 0;
+		while (turn) {
+			while(!buttonPressed) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			buttonPressed = false; 
+			up = row; 
+			right = col; 
+			while (isValid(1, up, right) && (board[up + 1][right].getType().equals("   |"))) {
+				buttons[up][right].getButton().setBackground(Color.RED);
+				up++;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				buttons[up][right].getButton().setBackground(Color.RED);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				buttons[up - 1][right].getButton().setBackground(Color.WHITE);
+			}
+			board[up][right].setValue(1);
+			board[up][right].setType(" X |");
+			board[up][right].setWin("X");
+			buttons[up][right].getButton().setBackground(Color.RED);
+			checkWin(1, up, right, winCon1);
+			turn = false;
+			
+//			old two person turn one
+//			
+//			
+//			while (true) {
+//				System.out.println("Where would you like to go?");
+//				try {
+//					spot = Integer.parseInt(scan.nextLine());
+//					break;
+//				} catch (Exception e) {
+//					System.out.println("THAT IS NOT A NUMBER!!!!!!");
+//				}
+//			}
+//			if (spot <= board.length && spot >= 1 && board[0][spot - 1].getType().equals("   |")) {
+//				up = 0;
+//				right = (spot - 1);
+//				while (isValid(1, up, right) && (board[up + 1][right].getType().equals("   |"))) {
+//					up++;
+//				}
+//				board[up][right].setValue(1);
+//				board[up][right].setType(" X |");
+//				board[up][right].setWin("X");
+//				checkWin(1, up, right, winCon1);
+//				turn = false;
+//			} else {
+//				System.out.println("INVALID RESPONSE!!!");
+//			}
+		}
+
+		printGrid();
+		if (noWin == true) {
+			while (!turn) {
+				while(!buttonPressed) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				buttonPressed = false; 
+				up = row; 
+				right = col; 
+				while (isValid(1, up, right) && (board[up + 1][right].getType().equals("   |"))) {
+					buttons[up][right].getButton().setBackground(Color.BLACK);
+					up++;
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					buttons[up][right].getButton().setBackground(Color.BLACK);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					buttons[up - 1][right].getButton().setBackground(Color.WHITE);
+				}
+				board[up][right].setValue(2);
+				board[up][right].setType(" O |");
+				board[up][right].setWin("O");
+				buttons[up][right].getButton().setBackground(Color.BLACK);
+				checkWin(2, up, right, winCon2);
+				turn = true;
+				
+//				old two person turn two
+//				
+//				while (true) {
+//					System.out.println("Where would you like to go?");
+//					try {
+//						spot = Integer.parseInt(scan.nextLine());
+//						break;
+//					} catch (Exception e) {
+//						System.out.println("THAT IS NOT A NUMBER!!!!!!");
+//					}
+//				}
+//				if (spot <= board.length && spot >= 1 && board[0][spot - 1].getType().equals("   |")) {
+//					up = 0;
+//					right = (spot - 1);
+//					while (isValid(1, up, right) && (board[up + 1][right].getType().equals("   |"))) {
+//						up++;
+//					}
+//					board[up][right].setValue(2);
+//					board[up][right].setType(" O |");
+//					board[up][right].setWin("O");
+//					checkWin(2, up, right, winCon2);
+//					turn = true;
+//				} else {
+//					System.out.println("INVALID RESPONSE!!!");
+//				}
+			}
+		}
+		if (noWin && checkFull()) {
+			runGame();
+		}
+	}
+
+	private boolean checkFull() {
+		int count = 0;
+		for (int i = 0; i < board.length; i++) {
+			for (int q = 0; q < board[i].length; q++) {
+				if (board[i][q].getType() == "   |") {
+					count++;
+				}
+			}
+		}
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	private void checkWin(int player, int up, int right, int winCon) {
+		int hold1 = 0;
+		int hold2 = 0;
+		hold1 = player;
+		int winner = winCon;
+		hold1 += checkSpot(up, right, -1, -1, -1, 2);
+		hold2 += checkSpot(up, right, 1, 1, 1, 3);
+		if (hold1 + hold2 >= winner) {
+			System.out.println(board[up][right].getWin() + " Won");
+			frame.setTitle(board[up][right].getWin() + " Won");
+			noWin = false;
+		}
+		hold1 = player;
+		hold2 = 0;
+		hold1 += checkSpot(up, right, -1, 1, -1, 3);
+		hold2 += checkSpot(up, right, 1, -1, 1, 2);
+		if (hold1 + hold2 >= winner) {
+			System.out.println(board[up][right].getWin() + " Won");
+			frame.setTitle(board[up][right].getWin() + " Won");
+			noWin = false;
+		}
+		hold1 = player;
+		hold2 = 0;
+		hold1 += checkSpot(up, right, -1, 0, -1, -1);
+		hold2 += checkSpot(up, right, 1, 0, 1, 1);
+		if (hold1 + hold2 >= winner) {
+			System.out.println(board[up][right].getWin() + " Won");
+			frame.setTitle(board[up][right].getWin() + " Won");
+			noWin = false;
+		}
+		hold1 = player;
+		hold2 = 0;
+		hold1 += checkSpot(up, right, 0, 1, 3, 3);
+		hold2 += checkSpot(up, right, 0, -1, 2, 2);
+		if (hold1 + hold2 >= winner) {
+			System.out.println(board[up][right].getWin() + " Won");
+			frame.setTitle(board[up][right].getWin() + " Won");
+			noWin = false;
+		}
+
+	}
+
+	private int checkSpot(int up, int right, int upMod, int rightMod, int firstCheck, int secondCheck) {
+		int count = 0;
+		if (turn) {
+			while (isValid(firstCheck, up, right) && isValid(secondCheck, up, right)) {
+				if (board[up + upMod][right + rightMod].getType() == " X |") {
+					count += board[up + upMod][right + rightMod].getValue();
+					up += upMod;
+					right += rightMod;
+				} else {
+					break;
+				}
+			}
+		} else {
+			while (isValid(firstCheck, up, right) && isValid(secondCheck, up, right)) {
+				if (board[up + upMod][right + rightMod].getType() == " O |") {
+					count += board[up + upMod][right + rightMod].getValue();
+					up += upMod;
+					right += rightMod;
+				} else {
+					break;
+				}
+			}
+		}
+		return count;
+	}
+
+	
+
+	
+
+}

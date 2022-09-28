@@ -1,0 +1,91 @@
+package OOPNotes;
+
+import java.util.Random;
+
+public class Pantheon {
+	
+	//Attributes
+	private Random rand;
+	private boolean belief;
+	private Diety chief;
+	private Diety[] dieties;
+	private int might;
+	
+	//Constructor
+	public Pantheon() {
+		rand = new Random();
+		belief = true;
+		chief = new Diety();
+		setDieties();
+		might = rand.nextInt(51) + 50;
+		
+		
+	}
+	
+	//Methods
+
+	
+	private void setDieties() {
+		this.dieties = new Diety[rand.nextInt(4) + 2];
+		for(int i = 0 ; i < this.dieties.length ; i ++ ) {
+			this.dieties[i] = new Diety(true);
+		}
+	}
+
+	public boolean isBelief() {
+		return belief;
+	}
+
+	public void setBelief() {
+		if(this.belief && !(this.chief.isBelief()== false || dietiesFallen())) {
+			System.err.println(this.chief.getName().toUpperCase() + "'s PANTHEON HAS FALLEN!");
+			this.belief = false;
+		}
+	}
+
+	private boolean dietiesFallen() {
+		for( int i = 0 ; i < this.dieties.length ; i++) {
+			if(this.dieties[i].isBelief()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public Diety getChief() {
+		return chief;
+	}
+
+	public void setChief(Diety chief) {
+		this.chief = chief;
+	}
+
+	public Diety[] getDieties() {
+		return dieties;
+	}
+
+	public void setDieties(Diety[] dieties) {
+		this.dieties = dieties;
+	}
+
+	public int getMight() {
+		return might;
+	}
+
+	public void setMight() {
+		this.might -= rand.nextInt(5) +1;
+	}
+	
+	public String toString() {
+		String output = this.chief.toString();
+		for( int i = 0 ; i < this.dieties.length ; i++) {
+			output += "\n\t" + this.dieties[i].toString();
+			
+		}
+		retur output
+	}
+	
+	
+	
+	
+}

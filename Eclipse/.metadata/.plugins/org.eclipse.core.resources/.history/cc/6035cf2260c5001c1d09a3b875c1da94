@@ -1,0 +1,84 @@
+package WHYYY;
+
+public class recursiveArt {
+	
+	
+	public static String box(String output, int size) {
+		String hold = "";
+		for(int i = 0; i < size; i++) {
+			for(int q = 0; q < size; q++) {
+				hold += output;
+			}
+			hold += "\n"; 
+		}
+		return hold; 
+	}
+	
+	public static void printLine(String thing, int length) {
+		if(length > 0) {
+			System.out.print(thing + " ");
+			printLine(thing, -- length); 
+		}
+	}
+	
+	public static void printRows(String thing, int rows, int end) {
+		if(end > 0) {
+			printLine(thing, rows); 
+			System.out.println();
+			printRows(thing, rows, --end); 
+		}
+	}
+	
+	public static void diamondSpacesTop(int width) {
+		if(width > 0) {
+			System.out.print(" ");
+			diamondSpacesTop(--width); 
+		}
+	}
+	
+	public static void diamondRowsTop(String thing, int start) {
+		if(start > 0) {
+			System.out.print(thing);
+			diamondRowsTop(thing, --start); 
+		}
+	}
+	public static void diamondRowsBot(String thing, int end) {
+		if(end > 0) {
+			System.out.print(thing);
+			diamondRowsTop(thing, --end); 
+		}
+	}
+	public static void diamondBottom() {
+		
+	}
+	public static void diamondMiddle() {
+		
+	}
+	public static void printDiamond(String thing, int width, int start, int end) {
+		if(start < width) { 
+			diamondSpacesTop(width - start);
+			diamondRowsTop(thing, start); 
+			System.out.println();
+			printDiamond(thing, width, ++start, end); 
+		}
+		if(end < width) {
+			diamondSpacesBot(end); 
+			diamondRowsBot(thing, width -end);
+			System.out.println();
+			printDiamond(thing, width, start, ++end); 
+		}
+	}
+	
+	private static void diamondSpacesBot(int end) {
+		if(end > 0) {
+			System.out.print(" ");
+			diamondSpacesTop(--end); 
+		}
+	}
+
+	public static void main(String[] args) {
+		//System.out.println(box("+", 10)); 
+		printDiamond("+", 11, 0,0); 
+	}
+
+}

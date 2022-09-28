@@ -1,0 +1,16 @@
+
+public class ChromaKey {
+
+	public static void green1test() {
+		Picture pic = new Picture("dDay1.jpg"); 
+		Picture grev = new Picture("nolightsaberGrevious1.jpg"); 
+		pic.explore();
+		grev.explore();
+		grev.getGreen(); 
+	}
+
+	public static void main(String[] args) {
+		green1test();
+	}
+
+}

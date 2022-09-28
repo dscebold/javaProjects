@@ -1,0 +1,15 @@
+package letsDoThis;
+
+public class Enemy {
+	
+	//Attributes
+	
+	private int health, hit; 
+	
+	
+	//Constructor
+	
+	
+	//Methods
+
+}

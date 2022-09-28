@@ -1,0 +1,28 @@
+package letsDoThis;
+
+public class GameLogic {
+	
+	//Attributes
+	
+	private Character person;
+
+	
+	//Constructor
+	
+	public GameLogic() {
+		person = new Character();
+	}
+	
+	
+	
+	//Methods
+	
+	
+	public void run() {
+		while(person.checkAlive() == true) {
+			
+		}
+		
+	}
+	
+}

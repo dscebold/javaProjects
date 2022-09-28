@@ -1,0 +1,32 @@
+package letsDoThis;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Character {
+	
+	
+	//Attributes
+	private String type; 
+	private int health; 
+	private boolean alive; 
+	private Random rand;
+	private Scanner scan; 
+	private String[] classes = {"1. Wizard", "2. Archer", "3. Barbarian"};
+	
+	
+	public Character() { //Constructor
+		type = setType(); 
+		alive = true; 
+		rand = new Random();
+		scan = new Scanner(System.in); 
+	}
+
+
+	private String setType() {
+		System.out.println(classes);
+		String decide = scan.nextLine().toLowerCase(); 
+		return type; 
+	}
+
+}

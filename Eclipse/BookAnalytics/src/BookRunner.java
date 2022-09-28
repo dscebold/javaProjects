@@ -1,0 +1,16 @@
+
+public class BookRunner {
+
+	public static void main(String[] args) {
+		
+		DrewBookAnalytics anInstance = new DrewBookAnalytics("A_Modest_Proposal.txt", "A_Modest_Proposal_Edit.txt");
+		
+		
+		anInstance.printFile(); 
+		
+		//System.out.println(anInstance.alphabetizeAllByChar());
+		System.out.println(anInstance.toString());
+
+	}
+
+}

@@ -1,0 +1,88 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
+
+public class ChromaKey {
+	private Scanner scan;
+	private File file;
+	private PrintWriter write;
+	private String read, allText, binText;
+	private static String useText; 
+	public ChromaKey() {
+		file = new File("rick.txt");
+		try {
+			scan = new Scanner(file);
+			write = new PrintWriter(read, "UTF-8");
+		} catch (UnsupportedEncodingException | FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		allText = "";
+		while (scan.hasNextLine()) {
+			String temp = scan.nextLine();
+			allText += temp + "\n";
+		}
+		useText = allText; 
+	}
+
+	public static void green1test() {
+		Picture pic = new Picture("dDay1.jpg");
+		Picture grev = new Picture("nolightsaberGrevious1.jpg");
+		// pic.explore();
+		// grev.explore();
+		pic.getGreen(grev);
+		pic.Grayscale();
+		pic.explore();
+	}
+
+	public static void green2test() {
+		Picture pic2 = new Picture("endgame.jpg");
+		Picture grev = new Picture("lightsaberGrevious1.jpg");
+		pic2 = pic2.scale(3.5, 3.5);
+//		pic2.explore();
+//		grev.explore();
+		grev = grev.scale(3, 3);
+		grev.setPink();
+//		grev.reColor(); 
+//		grev.explore();
+//		grev.lightUp();
+//		grev.explore();
+		pic2.getGreen1(grev);
+//		pic.explore();
+//		pic.Grayscale();
+		pic2.lightsaber();
+		pic2.explore();
+	}
+
+	public static void green3test() {
+		Picture pic = new Picture("sfSkyline.jpg");
+		Picture death = new Picture("deathStar.jpg");
+		pic = pic.scale(1.1603011583, 1.1603011583);
+		// pic.explore();
+		pic.getStar(death);
+		pic.explore();
+	}
+
+	public static void easySteno() {
+		String temp = ""; 
+		int hold = 0; 
+		Picture pic = new Picture("rickRoll.jpg");
+		for(int i = 0; i < useText.length(); i++) {
+			temp = "";
+			hold = 0; 
+			temp = "" + useText.charAt(i); 
+		}
+	}
+
+	public static void hardSteno() {
+
+	}
+
+	public static void main(String[] args) {
+		// green1test();
+		// green2test();
+		// green3test();
+	}
+
+}

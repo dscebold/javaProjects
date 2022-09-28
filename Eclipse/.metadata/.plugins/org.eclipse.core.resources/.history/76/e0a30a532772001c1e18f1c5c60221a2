@@ -1,0 +1,12 @@
+
+public class DayTwoReview {
+
+	public static void main(String[] args) {
+		
+		//Array
+		int[] nums = new int[7];
+		boolean bools = new boolean[3];
+
+	}
+
+}

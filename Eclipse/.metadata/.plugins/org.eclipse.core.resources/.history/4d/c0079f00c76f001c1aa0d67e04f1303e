@@ -1,0 +1,9 @@
+package letsDoThis;
+
+public class Character {
+	
+	public Character() {
+		private String 
+	}
+
+}

@@ -1,0 +1,48 @@
+package Notes;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class TryCatchNotesRunner {
+
+	public static void main(String[] args) {
+		// try catch is used to protect from errors breaking you code
+		Scanner scan = new Scanner(System.in);
+		Scanner numScan = new Scanner(System.in);
+		
+		
+		//This is the wrong way because scanners are bad
+		while(true) {
+			try {
+				System.out.println("Type a number...");
+				int num = numScan.nextInt();
+				System.out.println(num);
+				break;
+			}
+			catch(InputMismatchException e) {
+				System.out.println(e);
+				System.out.println("I said a number not characters");
+				numScan.next();
+			}
+		}
+		
+		//this way is much better because the scanner is not the problem
+		
+		while(true) {
+			try {
+				System.out.println("Type a number...");
+				int num = Integer.parseInt(scan.nextLine());
+				System.out.println(num);
+
+				break;
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+		}
+		
+		scan.close();
+		numScan.close();
+	}
+
+}

@@ -1,0 +1,48 @@
+package letsDoThis;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class GameLogic {
+
+	// Attributes
+
+	Character person;
+	Random rand;
+	Scanner scan;
+	ArrayList<Enemy> ants;
+	Room foyer, hall, corner, trap, lead, ante, boss; 
+
+	// Constructor
+
+	public GameLogic() {
+		person = new Character();
+		rand = new Random();
+		scan = new Scanner(System.in);
+		ants = new ArrayList<>();
+		foyer = new Room(true, false, false, false);
+		hall = new Room(true, true, false, false);
+		corner = new Room(false, true, true, false);
+		trap = new Room(false, false, true, true);
+		lead = new Room(true, false, false, true);
+		ante = new Room(true, true, false, false);
+		boss = new Room(false, true, false, false);
+	}
+
+	// Methods
+
+	public void run() {
+		System.out.println("You enter the first room ready to fight.");
+		int numEn = rand.nextInt(5);
+		for (int k = 0; k < numEn; k++) {
+			Enemy bob = new Enemy();
+			if (bob.getType().equals("nonNewtonian")) {
+				k = numEn;
+			}
+			ants.add(bob);
+		}
+
+	}
+
+}

@@ -1,0 +1,146 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ChromaKey {
+	private Scanner scan;
+	private File file;
+	private PrintWriter write;
+	private String read, allText;
+	private int[] words;
+
+	public ChromaKey() {
+		file = new File("rick.txt");
+		try {
+			scan = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		allText = "";
+		while (scan.hasNextLine()) {
+			String temp = scan.nextLine();
+			allText += temp + "\n";
+		}
+		allText = allText + "~~~"; 
+		words = new int[allText.length()];
+	}
+
+	public void green1test() {
+		Picture pic = new Picture("dDay1.jpg");
+		Picture grev = new Picture("nolightsaberGrevious1.jpg");
+		// pic.explore();
+		// grev.explore();
+		pic.getGreen(grev);
+		pic.Grayscale();
+		pic.explore();
+	}
+
+	public void green2test() {
+		Picture pic2 = new Picture("endgame.jpg");
+		Picture grev = new Picture("lightsaberGrevious1.jpg");
+		pic2 = pic2.scale(3.5, 3.5);
+//		pic2.explore();
+//		grev.explore();
+		grev = grev.scale(3, 3);
+		grev.setPink();
+//		grev.reColor(); 
+//		grev.explore();
+//		grev.lightUp();
+//		grev.explore();
+		pic2.getGreen1(grev);
+//		pic.explore();
+//		pic.Grayscale();
+		pic2.lightsaber();
+		pic2.explore();
+	}
+
+	public void green3test() {
+		Picture pic = new Picture("sfSkyline.jpg");
+		Picture death = new Picture("deathStar.jpg");
+		pic = pic.scale(1.1603011583, 1.1603011583);
+		// pic.explore();
+		pic.getStar(death);
+		pic.explore();
+	}
+
+	public String decodeEasy(String pict) {
+		String last = "";
+		Picture pic = easyStego(pict);
+		ArrayList<String> rewrite = pic.getEasyNums();
+		for (String text : rewrite) {
+			last += text;
+		}
+		return last;
+	}
+	
+	public String decodeHard(String pict) {
+		String last = "";
+		Picture pic = hardStego(pict);
+		ArrayList<String> rewrite = pic.getHardNums();
+		for (String text : rewrite) {
+			last += text;
+		}
+		return last;
+	}
+	
+	public String decodeHard() {
+		String last = "";
+		Picture pic = hardStego("hardEncoded.png");
+		ArrayList<String> rewrite = pic.getHardNums();
+		for (String text : rewrite) {
+			last += text;
+		}
+		return last;
+	}
+
+	public Picture easyStego(String pict) {
+		String temp = "";
+		int hold = 0;
+		Picture pic = new Picture(pict);
+		pic = pic.scale(5, 5);
+		for (int i = 0; i < allText.length(); i++) {
+			temp = Integer.toBinaryString((int) allText.charAt(i));
+			while (temp.length() < 8) {
+				temp = "0" + temp;
+			}
+			hold = (int) (Integer.parseInt(temp, 2));
+			words[i] = hold;
+		}
+		pic.hideEasyStego(words);
+		try {
+			pic.writeOrFail("easyEncoded.png");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pic;
+	}
+
+	public Picture hardStego(String pict) {
+		Picture pic = new Picture(pict);
+		String hold = "";
+		ArrayList<Character> bins = new ArrayList<>();
+		for (int i = 0; i < allText.length(); i++) {
+			hold = Integer.toBinaryString((int)allText.charAt(i));
+			while (hold.length() < 8) {
+				hold = "0" + hold;
+			}
+			for(int j = 0; j < hold.length(); j++) {
+				bins.add(hold.charAt(j));
+			}
+		}
+		pic.hidehardStego(bins);
+		try {
+			pic.writeOrFail("hardEncoded.png");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pic; 
+	}
+
+}

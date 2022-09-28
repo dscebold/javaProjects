@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+
+public class wordWriter {
+
+	private String word;
+	private ArrayList<String> total;
+	private String[] letters = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+
+	public wordWriter() {
+		word = "";
+		total = new ArrayList<>();
+	}
+
+	private void addWords() {
+		for(int i = 0; i < 26; i++) {
+			for(int j = 0; j < 26; j++) {
+				for(int k = 0; k < 26; k++) {
+					for(int l = 0; l < 26; l++) {
+						for(int m = 0; m < 26; m++) {
+							word = "" + letters[i] + letters[j] +letters[k] +letters[l] +letters[m]; 
+							total.add(word);
+							word = ""; 
+						}
+					}
+				} 
+			}
+		}
+		
+		
+		
+	}
+	
+	
+	private void printIt() {
+		for(int i = 0; i < total.size(); i++) {
+			System.out.print(total.get(i));
+		}
+	}
+	
+	public static void main(String[] args) {
+		wordWriter bing = new wordWriter(); 
+		bing.addWords();
+		bing.printIt();
+	}
+
+}

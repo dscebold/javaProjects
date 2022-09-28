@@ -1,0 +1,91 @@
+import java.awt.*;
+import java.util.*;
+
+public class SandLab {
+	public static void main(String[] args) {
+		SandLab lab = new SandLab(120, 80);
+		lab.run();
+	}
+
+	// add constants for particle types here
+	public static final int EMPTY = 0;
+	public static final int METAL = 1;
+	public static final int SAND = 2;
+
+	// do not add any more fields
+	private int[][] grid;
+	private SandDisplay display;
+	private HashMap<Integer, Color> colors;
+	Random rand;
+
+	public SandLab(int numRows, int numCols) {
+		String[] names;
+		names = new String[3];
+		names[EMPTY] = "Empty";
+		names[METAL] = "Metal";
+		names[SAND] = "Sand";
+		display = new SandDisplay("Falling Sand", numRows, numCols, names);
+		grid = new int[numRows][numCols];
+		colors = new HashMap<>();
+		colors.put(1, Color.GRAY);
+		colors.put(2, new Color(245, 238, 91));
+		rand = new Random();
+	}
+
+	// called when the user clicks on a location using the given tool
+	private void locationClicked(int row, int col, int tool) {
+		grid[row][col] = tool;
+
+	}
+
+	// copies each element of grid into the display
+	public void updateDisplay() {
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+				if (grid[i][j] > 0) {
+					for (int q = 1; q <= colors.size(); q++) {
+						if (grid[i][j] == q) {
+							display.setColor(i, j, colors.get(q));
+						}
+					}
+				} else {
+					display.setColor(i, j, Color.BLACK);
+				}
+			}
+		}
+	}
+
+	public void step() {
+		int wid = rand.nextInt(grid.length);
+		int hei = rand.nextInt(grid[0].length);
+		if (grid[wid][hei] == 2) {
+			sandMove(wid, hei);
+		}
+	}
+
+	// do not modify
+	public void run() {
+		while (true) {
+			for (int i = 0; i < display.getSpeed(); i++)
+				step();
+			updateDisplay();
+			display.repaint();
+			display.pause(1); // wait for redrawing and for mouse
+			int[] mouseLoc = display.getMouseLocation();
+			if (mouseLoc != null) // test if mouse clicked
+				locationClicked(mouseLoc[0], mouseLoc[1], display.getTool());
+		}
+	}
+
+	private void sandMove(int left, int down) {
+		if (left + 1 < grid.length && grid[left + 1][down] == 0) {
+			grid[left][down] = 0;
+			grid[left +1][down] = 2;
+		}
+		else if(left + 1 > grid.length && (down + 1 > grid[left].length || down -1 >= 0)) {
+			if()
+		}
+
+	}
+
+}
