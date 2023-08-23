@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/APCSAReview/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BookAnalytics/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CSP/Gridworld Project" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ConnectFour/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/DealOrNoDeal/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GridWorldB/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GridWorldScebold/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Java Notes/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LearnGUI/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/PictureLab/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/PublicSpeaking/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Recursion/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SandLab/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TextAdventure/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
