@@ -23,6 +23,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
   <component name="ProjectId" id="2UG7y0f0cXBLEnM45HrxScx5PBD" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -33,7 +36,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Drew/Documents/GitHub/UNO-Projects",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Drew/OneDrive/Documents/GitHub/javaProjects/Eclipse",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -130,6 +134,7 @@
       <workItem from="1698554222610" duration="736000" />
       <workItem from="1706035253267" duration="4081000" />
       <workItem from="1706641395863" duration="1861000" />
+      <workItem from="1707187952690" duration="146000" />
     </task>
     <servers />
   </component>
