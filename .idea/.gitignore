@@ -8,4 +8,6 @@
 /dataSources.local.xml
 
 /target/*
-Eclipse/target/
+/Eclipse/target/*
+/target/
+/Eclipse/target/
