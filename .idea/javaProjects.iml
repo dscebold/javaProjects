@@ -17,6 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Eclipse/SandLab/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Eclipse/TextAdventure/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Eclipse/WordleSolver/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Eclipse/AutoClicker/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
